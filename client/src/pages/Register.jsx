@@ -25,6 +25,7 @@ const Register = () => {
                     password: ""
                 })
                 Nav('/')
+                toast.success(res.data.message)
             }else if (!res.data.success) {
                 toast.error(res.data.message)
             }
@@ -35,12 +36,10 @@ const Register = () => {
 
     const handleChange = e => {
         const {id , value} = e.target
-        console.log(id);
         setDataForm({
             ...dataForm,
             [id]: value 
         })
-        console.log(dataForm);
     }
 
   return (

@@ -1,9 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { UserContextProvider } from '../components/UserContext';
 
 const Login = () => {
+
+  const userObj = useContext(UserContextProvider);
+
+    const Nav = useNavigate()
 
     const [dataForm, setDataForm] = useState({
         multFields: "",
@@ -14,7 +19,13 @@ const Login = () => {
         e.preventDefault()
         try {
             const res = await axios.post('http://localhost:8080/api/v1/login', dataForm)
-            console.log(res);
+            if (res.data.success === true) {
+                userObj.handleUser()
+                toast.success(res.data.message)
+                Nav('/home')
+            }else{
+                toast.error(res.data.message)
+            }
         } catch (error) {
             toast.error('server side error')
         }
@@ -22,12 +33,10 @@ const Login = () => {
 
     const handleChange = e => {
         const {id , value} = e.target
-        console.log(id);
         setDataForm({
             ...dataForm,
             [id]: value 
         })
-        console.log(dataForm);
     }
 
   return (

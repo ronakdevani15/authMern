@@ -6,22 +6,27 @@ import { UserContextProvider } from "./components/UserContext";
 import PageNotFound from "./pages/PageNotFound";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import Home from "./pages/Home";
 
 function App() {
   const userObj = useContext(UserContextProvider);
 
-  axios.defaults.withCredentials = true
-
-  console.log(userObj);
+  axios.defaults.withCredentials = true;
 
   return (
     <>
       <Router>
         <Toaster position="top-right" reverseOrder={false} />
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<h1>Home</h1>} />
+          {userObj.userToggle === true && (
+            <Route path="/home" element={<Home />} />
+          )}
+          {userObj.userToggle === false && (
+            <>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </>
+          )}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

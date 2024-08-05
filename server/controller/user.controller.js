@@ -4,7 +4,18 @@ import jwt from 'jsonwebtoken'
 
 export const currentUser = async (req,res) => {
     try {
-        res.status(200).send({message: "true" })
+        const user = await userModel.findOne({_id : res.userId})
+        if (user) {
+            res.status(200).send({success: true })
+        }
+    } catch (error) {
+        res.status(500).send({error: error.message})
+    }
+}
+
+export const logOut = async (req,res) => {
+    try {
+        res.clearCookie("token").send({message: 'logout success fully!',success: true})
     } catch (error) {
         res.status(500).send({error: error.message})
     }
@@ -59,10 +70,8 @@ export const loginUser = async (req,res) => {
         }
 
         const userDetails = await userModel.findOne({ $or : [{username: multFields},{email: multFields}] })
-        console.log(userDetails);
         if (userDetails &&(await bcrypt.compare(password, userDetails.password))) {
             const token = jwt.sign({userId : userDetails._id,email: userDetails.email, brand: "tech"},process.env.SEC_KEY)
-            console.log(token);
             res.cookie('token', token,{httpOnly: true}, {Credential : true}).send({message: 'login success!',success: true})
         }else{
             return res.status(200).send({message: "wrong credentials"})

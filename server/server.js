@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { dbConnection } from './utils/db.js'
 import userRoutes from './router/user.router.js'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 dotenv.config({path: './utils/config.env'})
 
@@ -13,6 +14,7 @@ app.use(cors({
     credentials: true,
 }))
 app.use(express.json())
+app.use(cookieParser())
 
 dbConnection()
 
