@@ -9,7 +9,7 @@ dotenv.config({path: './utils/config.env'})
 
 const app = express()
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://authmern-f9y9.onrender.com",
     methods: ['POST','GET','PUT','DELETE'],
     credentials: true,
 }))
