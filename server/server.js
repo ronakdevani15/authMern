@@ -18,8 +18,17 @@ app.use(cookieParser())
 
 dbConnection()
 
+app.get('/', async (req,res) => {
+    try {
+        res.send({message: "hit this api!"})
+    } catch (error) {
+        
+    }
+})
+
 app.use('/api/v1', userRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`server is runing on port ${process.env.PORT}`);
-})
+}
+)
