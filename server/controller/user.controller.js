@@ -15,7 +15,11 @@ export const currentUser = async (req,res) => {
 
 export const logOut = async (req,res) => {
     try {
-        res.clearCookie("token",{httpOnly: true, sameSite: 'none', secure: true }).send({message: 'logout success fully!',success: true})
+        res.clearCookie("token",{
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        }).send({message: 'logout success fully!',success: true})
     } catch (error) {
         res.status(500).send({error: error.message})
     }
@@ -72,7 +76,11 @@ export const loginUser = async (req,res) => {
         const userDetails = await userModel.findOne({ $or : [{username: multFields},{email: multFields}] })
         if (userDetails &&(await bcrypt.compare(password, userDetails.password))) {
             const token = jwt.sign({userId : userDetails._id,email: userDetails.email, brand: "tech"},process.env.SEC_KEY)
-            res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).send({ message: 'Login success!', success: true });
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,  
+                sameSite: 'none'
+            }).send({message: 'login success!',success: true})
         }else{
             return res.status(200).send({message: "wrong credentials"})
         }
