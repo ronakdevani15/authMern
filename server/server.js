@@ -9,7 +9,7 @@ dotenv.config({path: './utils/config.env'})
 
 const app = express()
 app.use(cors({
-    origin: "https://authmern-f9y9.onrender.com",
+    origin: "https://auth-mern-sandy.vercel.app",
     methods: ['POST','GET','PUT','DELETE'],
     credentials: true,
 }))
