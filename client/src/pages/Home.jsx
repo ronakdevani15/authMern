@@ -11,7 +11,7 @@ const Home = () => {
 
     const handleLogOut = async () => {
         try {
-            const res = await axios.get('https://auth-backend-9k38pidjt-ronaks-projects-645ad5b6.vercel.app/api/v1/logout')
+            const res = await axios.get('https://authmern-f9y9.onrender.com/api/v1/logout')
             if (res.data.success === true) {
                 userObj.handleUser()
                 Nav('/')
